@@ -26,6 +26,7 @@ export default {
     left: 0;
     z-index: 1000;
     padding: 16px 8px;
+    color: #fafafa;
 }
 
 .logo {
