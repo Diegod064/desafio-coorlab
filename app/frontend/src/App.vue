@@ -90,8 +90,8 @@ import Sidebar from './components/Sidebar.vue'
   justify-content: space-between;
   align-items: center;
   margin-top: 16px;
-  padding: 20px;
-  gap: 8px;
+  padding:  20px 8px;
+  /* gap: 8px; */
 }
 
 .left-container {
@@ -99,7 +99,7 @@ import Sidebar from './components/Sidebar.vue'
   color: #2d2d2d;
   padding: 20px;
   border-radius: 4px;
-  width: calc(32% - 10px);
+  width: calc(32% );
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -161,7 +161,7 @@ import Sidebar from './components/Sidebar.vue'
   color: #2d2d2d;
   padding: 20px;
   border-radius: 4px;
-  width: calc(60%);
+  width: calc(64%);
   margin: auto;
   display: flex;
   flex-direction: column;
