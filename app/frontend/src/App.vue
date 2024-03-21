@@ -8,16 +8,16 @@ import Sidebar from './components/Sidebar.vue'
     <Navbar />
     <Sidebar />
     <div class="container">
-      
+
       <div class="header">
-        <i class="fas fa-calculator"></i>
+        <v-icon icon="mdi-truck-delivery-outline" />
         <span>Calculadora de Viagem</span>
       </div>
 
       <div class="content-container">
         <div class="left-container">
           <div class="title">
-            <i class="fas fa-dollar-sign"></i>
+            <v-icon icon="mdi-hand-coin-outline"></v-icon>
             <h3>Calcule o Valor da Viagem</h3>
           </div>
           <!-- Inputs -->
@@ -28,10 +28,10 @@ import Sidebar from './components/Sidebar.vue'
             </div>
             <div class="input-group">
               <label for="data">Data:</label>
-              <input type="date" id="data">
+              <input label="asdasd" type="date" id="data">
             </div>
           </div>
-          
+
           <button class="buscar-btn">Buscar</button>
         </div>
 
@@ -54,16 +54,21 @@ import Sidebar from './components/Sidebar.vue'
 }
 
 .container {
-  width: 72%; /* Ajuste conforme necessário */
+  width: 72%;
+  /* Ajuste conforme necessário */
   /* height: 520px; */
   max-width: 1280px;
-  margin-top: 80px; /* Altura da navbar */
-  margin-left: 280px; /* Largura da sidebar */
+  margin-top: 80px;
+  /* Altura da navbar */
+  margin-left: 280px;
+  /* Largura da sidebar */
   margin-right: 16px;
   /* padding: 20px; */
-  background-color: #fafafa; /* Cor de fundo do container principal */
+  background-color: #fafafa;
+  /* Cor de fundo do container principal */
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Drop shadow */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* Drop shadow */
 }
 
 /* @media (max-width: 992px) {
@@ -74,11 +79,14 @@ import Sidebar from './components/Sidebar.vue'
 } */
 
 .header {
+  display: flex;
   background-color: #292e3f;
   color: #fafafa;
   padding: 16px;
   text-align: start;
   border-radius: 8px 8px 0 0;
+  align-content: center;
+  gap: 4px;
 }
 
 .header i {
@@ -90,7 +98,7 @@ import Sidebar from './components/Sidebar.vue'
   justify-content: space-between;
   align-items: center;
   margin-top: 16px;
-  padding:  20px 8px;
+  padding: 20px 8px;
   /* gap: 8px; */
 }
 
@@ -99,15 +107,15 @@ import Sidebar from './components/Sidebar.vue'
   color: #2d2d2d;
   padding: 20px;
   border-radius: 4px;
-  width: calc(32% );
+  width: calc(32%);
   margin: auto;
   display: flex;
   flex-direction: column;
   height: 380px;
-  justify-content: center; 
-  
+  justify-content: center;
+
   /* align-items: center;  */
-  
+
 }
 
 .left-container .title {
@@ -166,8 +174,10 @@ import Sidebar from './components/Sidebar.vue'
   display: flex;
   flex-direction: column;
   height: 380px;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center; /* Centraliza verticalmente */
- 
+  justify-content: center;
+  /* Centraliza horizontalmente */
+  align-items: center;
+  /* Centraliza verticalmente */
+
 }
 </style>
