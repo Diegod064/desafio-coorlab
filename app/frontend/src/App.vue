@@ -1,7 +1,25 @@
 <script setup lang="ts">
-import Navbar from './components/Navbar.vue'
-import Sidebar from './components/Sidebar.vue'
+import { ref } from 'vue';
+import Navbar from './components/Navbar.vue';
+import Sidebar from './components/Sidebar.vue';
+
+
+const destination = ref('');
+const date = ref('');
+const noDataSelected = ref(true);
+
+const handleSearch = () => {
+  if (!destination.value || !date.value) {
+    console.log("Por favor, preencha todos os campos");
+    noDataSelected.value = true;
+  } else {
+    console.log(`Estas são as melhores alternativas de viagem para a data selecionada ${destination.value} ${date.value}`);
+    noDataSelected.value = false;
+  }
+}
+
 </script>
+
 
 <template>
   <div class="home">
@@ -24,25 +42,40 @@ import Sidebar from './components/Sidebar.vue'
           <div class="inputs">
             <div class="input-group">
               <label for="destino">Destino:</label>
-              <input type="text" id="destino">
+              <!-- <input type="text" id="destino"> -->
+              <v-select
+                label="Select"
+                :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+                variant="outlined"
+                v-model="destination"
+              ></v-select>
             </div>
             <div class="input-group">
               <label for="data">Data:</label>
-              <input label="asdasd" type="date" id="data">
+              <input label="asdasd" type="date" id="data" v-model="date">
+              
             </div>
           </div>
 
-          <button class="buscar-btn">Buscar</button>
+          <button class="buscar-btn" @click="handleSearch" >Buscar</button>
         </div>
 
         <!-- Container da direita (será implementado posteriormente) -->
         <div class="right-container">
-          <h3>No data selected</h3>
+          <div class="right-container-content" v-if="noDataSelected">
+            <h3>Não há nenhum dado seleciondo</h3>
+          </div>
+          
+          <div class="right-container-content" v-else>
+            <h3>Estas são as melhores alternativas de viagem para a data selecionada</h3>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+
 
 <style scoped>
 .home {
@@ -55,20 +88,13 @@ import Sidebar from './components/Sidebar.vue'
 
 .container {
   width: 72%;
-  /* Ajuste conforme necessário */
-  /* height: 520px; */
   max-width: 1280px;
   margin-top: 80px;
-  /* Altura da navbar */
   margin-left: 280px;
-  /* Largura da sidebar */
   margin-right: 16px;
-  /* padding: 20px; */
   background-color: #fafafa;
-  /* Cor de fundo do container principal */
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  /* Drop shadow */
 }
 
 /* @media (max-width: 992px) {
@@ -99,7 +125,6 @@ import Sidebar from './components/Sidebar.vue'
   align-items: center;
   margin-top: 16px;
   padding: 20px 8px;
-  /* gap: 8px; */
 }
 
 .left-container {
@@ -175,9 +200,7 @@ import Sidebar from './components/Sidebar.vue'
   flex-direction: column;
   height: 380px;
   justify-content: center;
-  /* Centraliza horizontalmente */
   align-items: center;
-  /* Centraliza verticalmente */
 
 }
 </style>
