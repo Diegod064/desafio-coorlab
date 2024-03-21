@@ -37,7 +37,7 @@ import Sidebar from './components/Sidebar.vue'
 
         <!-- Container da direita (será implementado posteriormente) -->
         <div class="right-container">
-          <!-- Conteúdo da direita -->
+          <h3>No data selected</h3>
         </div>
       </div>
     </div>
@@ -76,8 +76,8 @@ import Sidebar from './components/Sidebar.vue'
 .header {
   background-color: #292e3f;
   color: #fafafa;
-  padding: 10px 0;
-  text-align: center;
+  padding: 16px;
+  text-align: start;
   border-radius: 8px 8px 0 0;
 }
 
@@ -89,8 +89,9 @@ import Sidebar from './components/Sidebar.vue'
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 16px;
   padding: 20px;
+  gap: 8px;
 }
 
 .left-container {
@@ -98,19 +99,21 @@ import Sidebar from './components/Sidebar.vue'
   color: #2d2d2d;
   padding: 20px;
   border-radius: 4px;
-  width: calc(40% - 10px);
+  width: calc(32% - 10px);
   margin: auto;
   display: flex;
   flex-direction: column;
   height: 380px;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; 
+  
+  /* align-items: center;  */
   
 }
 
 .left-container .title {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -154,6 +157,17 @@ import Sidebar from './components/Sidebar.vue'
 }
 
 .right-container {
-  width: calc(60% - 10px); /* Divide o espaço pela metade e subtrai a margem */
+  background-color: #007bff;
+  color: #2d2d2d;
+  padding: 20px;
+  border-radius: 4px;
+  width: calc(60%);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  height: 380px;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+ 
 }
 </style>
