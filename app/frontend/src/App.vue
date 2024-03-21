@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import Navbar from './components/Navbar.vue';
 import Sidebar from './components/Sidebar.vue';
+import TravelOptionItem from './components/TravelOptionItem.vue';
 
 
 const destination = ref('');
@@ -16,6 +17,16 @@ const handleSearch = () => {
     console.log(`Estas são as melhores alternativas de viagem para a data selecionada ${destination.value} ${date.value}`);
     noDataSelected.value = false;
   }
+}
+
+const sampleObj = {
+  name: 'Nome da opção',
+  price: '100.00',
+  duration: '2 horas',
+  seatType: 'Primeira Classe',
+  seat: 'A23',
+  isFast: true
+
 }
 
 </script>
@@ -43,21 +54,17 @@ const handleSearch = () => {
             <div class="input-group">
               <label for="destino">Destino:</label>
               <!-- <input type="text" id="destino"> -->
-              <v-select
-                label="Select"
-                :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
-                variant="outlined"
-                v-model="destination"
-              ></v-select>
+              <v-select label="Select" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+                variant="outlined" v-model="destination"></v-select>
             </div>
             <div class="input-group">
               <label for="data">Data:</label>
               <input label="asdasd" type="date" id="data" v-model="date">
-              
+
             </div>
           </div>
 
-          <button class="buscar-btn" @click="handleSearch" >Buscar</button>
+          <button class="buscar-btn" @click="handleSearch">Buscar</button>
         </div>
 
         <!-- Container da direita (será implementado posteriormente) -->
@@ -65,9 +72,10 @@ const handleSearch = () => {
           <div class="right-container-content" v-if="noDataSelected">
             <h3>Não há nenhum dado seleciondo</h3>
           </div>
-          
+
           <div class="right-container-content" v-else>
             <h3>Estas são as melhores alternativas de viagem para a data selecionada</h3>
+            <TravelOptionItem :option=sampleObj></TravelOptionItem>
           </div>
         </div>
       </div>
