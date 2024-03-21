@@ -31,7 +31,8 @@ export default {
 
 .logo {
     width: 180px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    margin-left: 8px;
 
 }
 
