@@ -198,7 +198,7 @@ const sampleObj = {
 }
 
 .right-container {
-  background-color: #007bff;
+  /* background-color: #007bff; */
   color: #2d2d2d;
   padding: 20px;
   border-radius: 4px;
@@ -209,6 +209,12 @@ const sampleObj = {
   height: 380px;
   justify-content: center;
   align-items: center;
+}
+
+.right-container-content h3{
+  margin-bottom: 16px
+
 
 }
+
 </style>
