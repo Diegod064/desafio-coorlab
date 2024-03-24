@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Navbar from './components/Navbar.vue';
 import Sidebar from './components/Sidebar.vue';
 import TravelOptionItem from './components/TravelOptionItem.vue';
@@ -7,6 +7,7 @@ import TravelOptionItem from './components/TravelOptionItem.vue';
 
 const destination = ref('');
 const date = ref('');
+const cities = ref<string[]>([]);
 const noDataSelected = ref(true);
 
 const handleSearch = () => {
@@ -28,6 +29,47 @@ const sampleObj = {
   isFast: true
 
 }
+
+
+const buscarPassagens = () => {
+  const queryParams = new URLSearchParams({
+    destino: destination.value,
+    data: date.value
+  });
+
+  return new Promise((resolve, reject) => {
+    fetch(`http://localhost:3000/passagens?${queryParams.toString()}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        resolve(data);
+        console.log(data)
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
+const fetchCities = () => {
+  fetch('http://localhost:3000/cities')
+    .then(response => response.json())
+    .then(data => {
+      cities.value = data;
+    })
+    .catch(error => {
+      console.error('Error fetching cities:', error);
+    });
+};
+
+onMounted(() => {
+  fetchCities();
+});
+
 
 </script>
 
@@ -54,7 +96,7 @@ const sampleObj = {
             <div class="input-group">
               <label for="destino">Destino:</label>
               <!-- <input type="text" id="destino"> -->
-              <v-select label="Select" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+              <v-select label="Select" :items="cities"
                 variant="outlined" v-model="destination"></v-select>
             </div>
             <div class="input-group">
@@ -64,7 +106,7 @@ const sampleObj = {
             </div>
           </div>
 
-          <button class="buscar-btn" @click="handleSearch">Buscar</button>
+          <button class="buscar-btn" @click="buscarPassagens">Buscar</button>
         </div>
 
         <!-- Container da direita (será implementado posteriormente) -->
