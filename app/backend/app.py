@@ -43,10 +43,23 @@ def get_travels():
     else:
         cheapest_passage = cheapest_comfort
         cheapest_passage_type = 'Confort'
-        seat = f"Poltrona {cheapest_comfort['seat']} ou Leito {cheapest_comfort['bed']}"
+        seat = cheapest_comfort['bed']
         cheapest_price = cheapest_comfort['price_confort']
 
     fastest_passage = min(passages_destination, key=lambda x: int(x['duration'].replace('h', '')))
+
+    if cheapest_passage == fastest_passage and cheapest_passage_type == 'Confort':
+        return jsonify({
+            "cheapest_passage": {
+                "name": cheapest_passage["name"],
+                "price": cheapest_price,
+                "duration": cheapest_passage["duration"],
+                "seatType": cheapest_passage_type,
+                "seat": seat,
+                "isFast": True,
+                "isCheapest": True
+            }
+        })
 
     cheapest_passage_data = {
         "name": cheapest_passage["name"],
@@ -54,7 +67,7 @@ def get_travels():
         "duration": cheapest_passage["duration"],
         "seatType": cheapest_passage_type,
         "seat": seat,
-        "isFast": False,
+        "isFastest": False,
         "isCheapest": True
     }
 
@@ -64,7 +77,7 @@ def get_travels():
         "duration": fastest_passage["duration"],
         "seatType": "Confort",
         "seat": fastest_passage['bed'],
-        "isFast": True,
+        "isFastest": True,
         "isCheapest": False
     }
 
