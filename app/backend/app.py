@@ -37,12 +37,12 @@ def get_travels():
 
     if float(cheapest_economy['price_econ'].replace('R$ ', '')) <= float(cheapest_comfort['price_confort'].replace('R$ ', '')):
         cheapest_passage = cheapest_economy
-        passage_type = 'Economica'
+        cheapest_passage_type = 'Economica'
         seat = f"Poltrona {cheapest_economy['seat']}"
         cheapest_price = cheapest_economy['price_econ']
     else:
         cheapest_passage = cheapest_comfort
-        passage_type = 'Confort'
+        cheapest_passage_type = 'Confort'
         seat = f"Poltrona {cheapest_comfort['seat']} ou Leito {cheapest_comfort['bed']}"
         cheapest_price = cheapest_comfort['price_confort']
 
@@ -52,7 +52,7 @@ def get_travels():
         "name": cheapest_passage["name"],
         "price": cheapest_price,
         "duration": cheapest_passage["duration"],
-        "seatType": passage_type,
+        "seatType": cheapest_passage_type,
         "seat": seat,
         "isFast": False,
         "isCheapest": True
@@ -62,7 +62,7 @@ def get_travels():
         "name": fastest_passage["name"],
         "price": fastest_passage['price_confort'],
         "duration": fastest_passage["duration"],
-        "seatType": passage_type,
+        "seatType": "Confort",
         "seat": fastest_passage['bed'],
         "isFast": True,
         "isCheapest": False
