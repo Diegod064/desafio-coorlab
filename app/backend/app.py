@@ -27,7 +27,7 @@ def get_travels():
     if float(cheapest_economy['price_econ'].replace('R$ ', '')) <= float(cheapest_comfort['price_confort'].replace('R$ ', '')):
         cheapest_passage = cheapest_economy
         cheapest_passage_type = 'Economica'
-        seat = f"Poltrona {cheapest_economy['seat']}"
+        seat = cheapest_economy['seat']
         cheapest_price = cheapest_economy['price_econ']
     else:
         cheapest_passage = cheapest_comfort
@@ -38,42 +38,36 @@ def get_travels():
     fastest_passage = min(passages_destination, key=lambda x: int(x['duration'].replace('h', '')))
 
     if cheapest_passage == fastest_passage and cheapest_passage_type == 'Confort':
-        return jsonify({
-            "cheapest_passage": {
+        return jsonify([{
+            "name": cheapest_passage["name"],
+            "price": cheapest_price,
+            "duration": cheapest_passage["duration"],
+            "seatType": cheapest_passage_type,
+            "seat": seat,
+            "isFast": True,
+            "isCheapest": True
+        }])
+    else:
+        return jsonify([
+            {
                 "name": cheapest_passage["name"],
                 "price": cheapest_price,
                 "duration": cheapest_passage["duration"],
                 "seatType": cheapest_passage_type,
                 "seat": seat,
-                "isFast": True,
+                "isFastest": False,
                 "isCheapest": True
+            },
+            {
+                "name": fastest_passage["name"],
+                "price": fastest_passage['price_confort'],
+                "duration": fastest_passage["duration"],
+                "seatType": "Confort",
+                "seat": fastest_passage['bed'],
+                "isFastest": True,
+                "isCheapest": False
             }
-        })
-
-    cheapest_passage_data = {
-        "name": cheapest_passage["name"],
-        "price": cheapest_price,
-        "duration": cheapest_passage["duration"],
-        "seatType": cheapest_passage_type,
-        "seat": seat,
-        "isFastest": False,
-        "isCheapest": True
-    }
-
-    fastest_passage_data = {
-        "name": fastest_passage["name"],
-        "price": fastest_passage['price_confort'],
-        "duration": fastest_passage["duration"],
-        "seatType": "Confort",
-        "seat": fastest_passage['bed'],
-        "isFastest": True,
-        "isCheapest": False
-    }
-
-    return jsonify({
-        "cheapest_passage": cheapest_passage_data,
-        "fastest_passage": fastest_passage_data,
-    })
+        ])
 
 
 if __name__ == '__main__':
