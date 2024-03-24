@@ -5,25 +5,14 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-with open('../data.json', 'r') as file:
+with open('../data.json', encoding='utf-8') as file:
     travel_data = json.load(file)
 
 @app.route('/fetch-cities')
 def fetch():
-    with open('../data.json') as file:
-        data = json.load(file)
+    cities = {transport['city'] for transport in travel_data['transport']}
+    return jsonify(sorted(list(cities)))
 
-    transports = data['transport']
-    cities = set()
-
-    for transport in transports:
-        city = transport['city']
-        if city not in cities:
-            cities.add(city)
-
-    return jsonify(sorted((list(cities))))
-
-# @app.route('/passagens/<string:destination>/', methods=['GET'])
 @app.route('/travels', methods=['GET'])
 def get_travels():
     
