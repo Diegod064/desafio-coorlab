@@ -5,15 +5,10 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Carregar os dados das viagens a partir do arquivo JSON
 with open('../data.json', 'r') as file:
     travel_data = json.load(file)
 
-@app.route('/api/travels')
-def get_travels():
-    return jsonify(travel_data)
-
-@app.route('/cities')
+@app.route('/fetch-cities')
 def fetch():
     with open('../data.json') as file:
         data = json.load(file)
@@ -29,21 +24,53 @@ def fetch():
     return jsonify(sorted((list(cities))))
 
 # @app.route('/passagens/<string:destination>/', methods=['GET'])
-@app.route('/passagens', methods=['GET'])
-def get_passagens():
-    # # Obtenha os parâmetros da solicitação
-    destino = request.args.get('destino')
-    data = request.args.get('data')
+@app.route('/travels', methods=['GET'])
+def get_travels():
+    
+    destination = request.args.get('destino')
+    date = request.args.get('data')
 
-    # # Lógica para encontrar a passagem mais econômica e a mais rápida
-    # passagem_economica = min(passagens, key=lambda x: float(x['price_econ'].replace('R$ ', '')))
-    # passagem_rapida = min(passagens, key=lambda x: int(x['duration'].replace('h', '')))
+    passages_destination = [transport for transport in travel_data['transport'] if transport['city'] == destination]
+
+    cheapest_economy = min(passages_destination, key=lambda x: float(x['price_econ'].replace('R$ ', '')))
+    cheapest_comfort = min(passages_destination, key=lambda x: float(x['price_confort'].replace('R$ ', '')))
+
+    if float(cheapest_economy['price_econ'].replace('R$ ', '')) <= float(cheapest_comfort['price_confort'].replace('R$ ', '')):
+        cheapest_passage = cheapest_economy
+        passage_type = 'Economica'
+        seat = f"Poltrona {cheapest_economy['seat']}"
+        cheapest_price = cheapest_economy['price_econ']
+    else:
+        cheapest_passage = cheapest_comfort
+        passage_type = 'Confort'
+        seat = f"Poltrona {cheapest_comfort['seat']} ou Leito {cheapest_comfort['bed']}"
+        cheapest_price = cheapest_comfort['price_confort']
+
+    fastest_passage = min(passages_destination, key=lambda x: int(x['duration'].replace('h', '')))
+
+    cheapest_passage_data = {
+        "name": cheapest_passage["name"],
+        "price": cheapest_price,
+        "duration": cheapest_passage["duration"],
+        "seatType": passage_type,
+        "seat": seat,
+        "isFast": False,
+        "isCheapest": True
+    }
+
+    fastest_passage_data = {
+        "name": fastest_passage["name"],
+        "price": fastest_passage['price_confort'],
+        "duration": fastest_passage["duration"],
+        "seatType": passage_type,
+        "seat": fastest_passage['bed'],
+        "isFast": True,
+        "isCheapest": False
+    }
 
     return jsonify({
-        # "passagem_economica": passagem_economica,
-        # "passagem_rapida": passagem_rapida
-        "paramDestino": destino,
-        "paramData": data,
+        "cheapest_passage": cheapest_passage_data,
+        "fastest_passage": fastest_passage_data,
     })
 
 

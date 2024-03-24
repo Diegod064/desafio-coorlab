@@ -24,21 +24,21 @@ const sampleObj = {
   name: 'Nome da opção',
   price: '100.00',
   duration: '2 horas',
-  seatType: 'Primeira Classe',
+  seatType: 'Economica',
   seat: 'A23',
   isFast: true
 
 }
 
 
-const buscarPassagens = () => {
+const searchTravels = () => {
   const queryParams = new URLSearchParams({
     destino: destination.value,
     data: date.value
   });
 
   return new Promise((resolve, reject) => {
-    fetch(`http://localhost:3000/passagens?${queryParams.toString()}`)
+    fetch(`http://localhost:3000/travels?${queryParams.toString()}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -56,7 +56,7 @@ const buscarPassagens = () => {
 };
 
 const fetchCities = () => {
-  fetch('http://localhost:3000/cities')
+  fetch('http://localhost:3000/fetch-cities')
     .then(response => response.json())
     .then(data => {
       cities.value = data;
@@ -106,7 +106,7 @@ onMounted(() => {
             </div>
           </div>
 
-          <button class="buscar-btn" @click="buscarPassagens">Buscar</button>
+          <button class="buscar-btn" @click="searchTravels">Buscar</button>
         </div>
 
         <!-- Container da direita (será implementado posteriormente) -->
