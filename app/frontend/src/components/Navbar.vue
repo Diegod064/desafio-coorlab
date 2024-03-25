@@ -12,11 +12,11 @@ export default {
 <style scoped>
 .navbar {
   background-color: white;
-  height: 60px; /* Altura da Navbar */
-  width: 100%; /* Largura total */
-  position: fixed; /* Fixar no topo da página */
-  top: 0; /* Alinhar ao topo */
-  z-index: 900; /* Garantir que está sobreposta a outros elementos */
+  height: 60px;
+  width: 100%; 
+  position: fixed;
+  top: 0; 
+  z-index: 900;
 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
