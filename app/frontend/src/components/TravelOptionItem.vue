@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+// import { defineProps } from 'vue';
 
 
 defineProps<{
-    option: {
-        name: string;
-        price: string;
-        duration: string;
-        seatType: string;
-        seat: string;
-        isFast: boolean;
-    };
+
+  passages: {
+    name: string;
+    price: string;
+    duration: string;
+    seatType: string;
+    seat: string;
+    isFastest: boolean;
+    isCheapest: boolean;
+  }[];
 }>();
 
 
@@ -18,22 +20,28 @@ defineProps<{
 
 
 <template>
-    <div class="travel-option-item">
-        <div class="container-info">
-            <div class="container-info-icon">
-                <v-icon icon="mdi-hand-coin-outline"></v-icon>
-            </div>
-            <div class="container-info-description">
-                <p class="titte"> {{ option.name }}</p>
-                <p class="text">Leito: {{ option.seat }}</p>
-                <p class="text">Tempo estimado: {{ option.duration }}</p>
-            </div>
-        </div>
-        <div class="container-price">
-          <p class="titte">Preço</p>
-          <div class="text">{{ option.price }}</div>
-        </div>
+  <div class="travel-option-item" v-for="(passage, index) in passages" :key="index">
+    <div class="container-info">
+      <div class="container-info-icon">
+        <v-icon v-if="passage.isCheapest && !passage.isFastest" icon="mdi-hand-coin-outline"></v-icon>
+        <v-icon v-else-if="!passage.isCheapest && passage.isFastest" icon="mdi-clock-check-outline"></v-icon>
+        <v-icon v-else-if="passage.isCheapest && passage.isFastest && passage.seatType == 'Confort'" icon="mdi-clock-check-outline"></v-icon>
+      </div>
+      <div class="container-info-description">
+        <p class="titte"> {{ passage.name }}</p>
+        <p v-if="passage.seatType == 'Economica'" class="text">Poltrona: {{ passage.seat }} (Convencional)</p>
+        <p v-if="passage.seatType == 'Confort'" class="text">Leito: {{ passage.seat }} (Completo)</p>
+        <p class="text">Tempo estimado: {{ passage.duration }}</p>
+      </div>
     </div>
+    <div class="container-price">
+      <p class="titte">Preço</p>
+      <div class="text">{{ passage.price }}</div>
+    </div>
+  </div>
+  <!-- <p v-if="passages[0].isCheapest && passages[0].seatType == 'Confort'">Essa viagem é a mais rápida e mais barata.</p> -->
+
+
 </template>
 
 <style scoped>
@@ -70,6 +78,7 @@ defineProps<{
   border-radius: 8px 0 0 8px;
   padding: 1.5rem;
   color: white;
+  height: 100%
 }
 
 .container-info-description {
@@ -77,19 +86,18 @@ defineProps<{
   color: #333;
   margin-left: 1rem;
   background-color: #f1f1f1
-
 }
 
 .container-price {
   display: flex;
   flex-direction: column;
   align-items: start;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 16px;
   color: #333;
   width: 20%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 12px;
+  min-width: 100px;
 }
 
 .titte {
