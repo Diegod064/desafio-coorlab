@@ -39,7 +39,7 @@ defineProps<{
       <div class="text">{{ passage.price }}</div>
     </div>
   </div>
-  <!-- <p v-if="passages[0].isCheapest && passages[0].seatType == 'Confort'">Essa viagem é a mais rápida e mais barata.</p> -->
+  <p v-if="passages[0].isCheapest && passages[0].seatType == 'Confort'">Essa viagem é a mais rápida e mais barata.</p>
 
 
 </template>
